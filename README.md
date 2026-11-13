@@ -1,90 +1,71 @@
-# Student Performance Prediction Using Machine Learning
+Student Performance Prediction Using Machine Learning
 
-## Project Overview
+THis is our final project for CSE 4309 - Fundamental Of Machine Learning
 
-This project predicts whether a student will pass or fail using machine learning techniques and the UCI Student Performance Dataset.
+For this project, we wanted to see if we could prodict whether a student might pass or fail based on the information of previous grades, study time, absence and so on.
+We used a student performance dataset from the UCI Machine Learning Rep and compared 3 ML algorigth to see how well all these methods performed.
 
-The project was developed for CSE 4309 — Machine Learning.
+Dataset:
+We used the student performance dataset from UCI Machine LEarning Repo.
 
-## Dataset
+    Dataset link: https://archive.ics.uci.edu/dataset/320/student+performance
 
-- Source: UCI Machine Learning Repository
-- Dataset: Student Performance (Portuguese)
-- Total records: 649
-- Target: Pass (G3 >= 10) or Fail (G3 < 10)
+    We worked with the Portuguese course dataset "student-por.csv" which contain information about 649 students.
 
-## Machine Learning Algorithms
+    The dataset Contained:
+    1. Student age and family background
+    2. Study time
+    3. Absensce
+    4. Previous grades
+    5. First ad second period grades (G1 and G2)
+    6. Final Grade (G3)
 
-Three classification algorithms are implemented:
+    The constraints we used:
+    G3 .>= 10 means PASS (1)
+    G3 < 10 means FAIL (0)
 
-1. Logistic Regression
-2. Decision Tree
-3. Random Forest
+What we did:
+We started by exploring the dataset to understand the student information and how the grades were distributed.
 
-The models are evaluated using accuracy, balanced accuracy, precision, recall, F1-score, and cross-validation.
+    After that, we prepared the data for training. Since the dataset contains both numerical and categorical information, we used scaling and one-hot encoding.
 
-## Project Files
+    We divided the dataset into 80% training data and 20% testing data.
 
-- `eda.py` — Exploratory data analysis and visualizations
-- `train.py` — Model training and evaluation
-- `feature_importance.py` — Feature importance analysis
-- `app.py` — Streamlit prediction interface
-- `data/` — Dataset used by the project
-- `models/` — Saved trained model
-- `outputs/` — Generated graphs and evaluation results
-- `requirements.txt` — Python dependencies
+    We trained and compared three machine learning algorithms:
 
-## Installation
+    1. Logistic Regression
+    2. Decision Tree
+    3. Random Forest
 
-Clone the repository:
+Model Evaluation:
+We used five-fold cross-validation on the training data to compare the models.
 
-```bash
-git clone https://github.com/YOUR_USERNAME/Student-Performance-Prediction.git
-cd Student-Performance-Prediction
-```
+    Since most students in the dataset passed, we did not want to depend only on accuracy. We also looked at precision, recall, F1-score, and balanced accuracy, especially for students who failed.
 
-Create and activate a virtual environment:
+    Random Forest with previous grades had the highest cross-validation Fail F1-score, so we selected it as our final model.
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
+Project Files: 1. eda.py - Explores the dataset and generates graphs. 2. train.py - Trains and compares the machine learning models. 3. feature_importance.py - Checks which features were important for the 4. selected model. 5. app.py - Streamlit application for making predictions. 6. data/student-por.csv - Dataset used in the project. 7. models/best_model.joblib - Saved trained model. 8. outputs/ - Contains graphs and model evaluation results. 9. requirements.txt - Python libraries needed to run the project.
 
-Install dependencies:
+Run this Project: <All the python code is from my linux machine>
 
-```bash
-python -m pip install -r requirements.txt
-```
+Step 1: Create a virtual Environment <python3 -m venv .venv>
+Step 2: Activate on your system <source .venv/bin/activate>
+Step 3: Install all the required libraries from the requirements.txt
+<python -, pip install -r requrements.txt>
+Step 5: Run the data analysis <python eda.py>
+Step 6: Train and evaluate the model. <python train.py>
+Step 7: Generate he feature imp results <python feature_importance.py>
+Step 8: Open the streamlit application <python -m streamlit run app.py>
 
-## Run the Application
+Streamlit Application:
+We created a simple application where users can enter student information and be able to predict the student will pass or fail. It also disoplays the estimated probabilities for both outcomes.
 
-```bash
-python -m streamlit run app.py
-```
+    The application uses the Random Forests model saved during Training.
 
-Open the local URL displayed in the terminal.
+What we Learned:
+The main thing that we noticed is that previous makes the huge difference in the prediction results. Model using G1 and G2 genreally performed better than models without them.
 
-## Run the ML Scripts
+    We also learned that accuracy alone is not always the best way to compare models.
 
-```bash
-python eda.py
-python train.py
-python feature_importance.py
-```
-
-## Results
-
-The Random Forest model with previous grades (G1 and G2) was selected based on five-fold cross-validation Fail F1-score.
-
-- Cross-validation Fail F1: 0.785
-- Test accuracy: 85.4%
-- Test Fail recall: 75%
-- Test Fail F1: 0.612
-
-The project is intended as an educational machine learning demonstration, not a validated system for real-world academic decisions.
-
-## Team
-
-CSE 4309 Machine Learning Group Project.
-
-Team members and contributions will be added.
+    Limitations:
+        We used only one datset. So the mdoels may not perform the same way for the students from other schools.
